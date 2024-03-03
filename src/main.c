@@ -23,8 +23,12 @@ void wait(){
 
 void main() {
 
-// Enable port A clock gate.
+// Enable port A clock gate and ADC1
     *((volatile unsigned int *)0x40021018) |= (1 << 2);
+    *((volatile unsigned int *)0x40021018) |= (1 << 9);
+	
+	//We start ADC1 Callibration to better read the analog voltage.
+	*( (volatile unsigned int *)0x40012408) |= (1 << 2);
 
     // Configure GPIO A pin 9-10 as output. (pins 8-15 use CRH while 0-7 use CRL registers)
     *(( volatile unsigned int *)0x40010804) = ((0x44444444 // The reset value
